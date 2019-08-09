@@ -1,0 +1,9 @@
+@import "../neufund-theme";
+
+textarea {
+  background-color: transparent;
+  padding: px-to-rem(10px) px-to-rem(16px);
+  min-height: px-to-rem(100px);
+  width: 100%;
+  outline: none;
+}

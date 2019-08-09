@@ -1,0 +1,9 @@
+{
+  "baseUrl": "https://localhost:9090",
+  "integrationFolder": "./app/",
+  "defaultCommandTimeout": 90000,
+  "pageLoadTimeout": 90000,
+  "videoUploadOnPasses": false,
+  "numTestsKeptInMemory": 0,
+  "projectId": "r5nj5t"
+}

@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      "react-intl-krzkaczor",
+      {
+        "messagesDir": "./intl/messages/"
+      }
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-syntax-dynamic-import", { "legacy": true }]
+  ],
+  "presets": ["@babel/preset-typescript", "@babel/react"]
+}

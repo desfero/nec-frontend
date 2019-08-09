@@ -1,0 +1,67 @@
+$color-blue: #2e92ff;
+$color-green: #50e3c2;
+
+// old color palette it should be removed when we finish restyling
+$blue: #2072d4;
+$blue-gray: #86a0b5;
+// end of old color palette
+
+// colors not present in style guide but used in designs
+
+$gray: #d8e0eb;
+$gray2: #85a0b5;
+$gray3: #406483;
+$gray4: #979797;
+$gray5: #aabcca;
+$gray6: #86a4b7;
+$gray7: #fafafa;
+$gray8: #f0f0f0;
+$gray9: #f6f7f8;
+$gray9: #f6f7f8;
+$gray10: #bbcad5;
+
+$gray-shadow: #222;
+$blue-light: #78d7dc;
+$green-light: #89eb82;
+$green2: #bbefe4;
+$green3: #41b5aa;
+$blue-green: #146381;
+$black: #000;
+
+//colors used in new designs
+$text-gray: #94a5b3;
+$ticker-blue-two: #1737d6;
+$new-gray-two: #d8e0eb;
+
+// new color palette
+
+$neu-bright-orange: #ff6d00;
+$neu-white: #efefef;
+$neu-seaweed: #20e06e;
+$neu-seaweed-bg: rgba($neu-seaweed, .1);
+$neu-piss-yellow: #d5e20f;
+$neu-neon-yellow: #e4f22c;
+$neu-black: #2b2b2b;
+$neu-slate-grey: #656b72;
+$neu-pale-blue: #f6f8fb;
+$neu-silver: #c4c5c6;
+$neu-pale-grey: #e3eaf5;
+$neu-pale-grey-two: #f3f5f7;
+$neu-charcoal-grey: #142431;
+$color-black: #0b0e11;
+$neu-greyish-brown: #4c4c4c;
+$neu-cloudy-blue: #aabcca;
+$neu-light-blue-grey: #d8e0eb;
+$neu-red: #ed0000;
+$neu-white-two: #fff;
+$neu-blue: #4a90e2;
+$neu-charcoal-grey2: #394651;
+$neu-shuttle-gray: #556877;
+$neu-gull-gray: #94a5b3;
+
+// Override colors that are used to generate classes like .text-warning, .bg-warning, .alert-warning and others
+// see https://getbootstrap.com/docs/4.0/getting-started/theming/#maps-and-loops
+$theme-colors:  (
+  "warning": $neu-bright-orange,
+  "success": $neu-seaweed,
+);

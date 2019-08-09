@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@import "./mixins/index";
+@import "./variables/index";
+@import "./variables";
+@import "./global";
+
+@import "./elements/a";
+@import "./elements/button";
+@import "./elements/form";
+@import "./elements/iframe";
+@import "./elements/img";
+@import "./elements/input";
+@import "./elements/label";
+@import "./elements/table";
+@import "./elements/textarea";
+@import "./elements/ul-ol";
+
+a,
+button,
+input,
+textarea {
+  &,
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+

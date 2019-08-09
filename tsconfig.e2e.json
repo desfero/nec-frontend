@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "es2017",
+    "types": ["cypress", "node"]
+  },
+  "include": [
+    "./@types/**/*.d.ts",
+    "./typings/**/*.d.ts",
+    "./node_modules/web3-typescript-typings/index.d.ts",
+    "./app/test-e2e/**/*.spec.e2e.ts",
+    "./app/test-e2e/**/*.spec.e2e.io.ts"
+  ],
+  "exclude": []
+}

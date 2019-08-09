@@ -1,0 +1,134 @@
+@import "../variables";
+
+@mixin font-default {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(14px);
+  line-height: 1.64;
+}
+
+@mixin font-thin {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(12px);
+  font-weight: 300;
+}
+
+@mixin font-small {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(9px);
+}
+
+// Headline
+
+@mixin headline-huge {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(48px);
+  letter-spacing: px-to-rem(-.3px);
+}
+
+@mixin headline-big {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(34px);
+  letter-spacing: px-to-rem(-.5px);
+}
+
+@mixin headline-large {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(28px);
+}
+
+@mixin headline-bigger {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(24px);
+}
+
+@mixin font-headline {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(20px);
+  letter-spacing: px-to-rem(-.3px);
+}
+
+@mixin font-headline-medium {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(18px);
+  letter-spacing: px-to-rem(-.3px);
+}
+
+@mixin font-headline-small {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(16px);
+  letter-spacing: px-to-rem(-.3px);
+}
+
+@mixin font-headline-condensed {
+  font-family: $headings-font-family;
+  font-size: .875rem;
+  letter-spacing: -.00125rem;
+}
+
+// Quote
+
+@mixin blockquote {
+  @include font-headline-small;
+
+  font-style: italic;
+}
+
+// Button
+
+@mixin font-button-default {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(15px);
+  letter-spacing: px-to-rem(-.2px);
+}
+
+@mixin font-button-small {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(10px);
+}
+
+// Tab
+
+@mixin font-tab {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(13px);
+  letter-spacing: px-to-rem(-.02px);
+}
+
+// Label
+
+@mixin font-label {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(12px);
+  letter-spacing: -.2px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+@mixin font-label-small {
+  @include font-small;
+
+  text-transform: uppercase;
+}
+
+@mixin font-label-micro {
+  font-family: $headings-font-family;
+  font-size: px-to-rem(6px);
+  text-transform: uppercase;
+}
+
+// Typography utils
+
+@mixin line-clamp ($lines, $line-height: false) {
+  overflow: hidden;
+  position: relative;
+  display: -webkit-box; // sass-lint:disable-line no-vendor-prefixes
+  -webkit-line-clamp: $lines; // sass-lint:disable-line no-vendor-prefixes
+  -webkit-box-orient: vertical; // sass-lint:disable-line no-vendor-prefixes
+
+  @if ($line-height) {
+    @supports not (-webkit-box-orient: vertical) { // sass-lint:disable-line no-vendor-prefixes
+      line-height: $line-height;
+      height: $lines * strip-unit($line-height) + em;
+    }
+  }
+}

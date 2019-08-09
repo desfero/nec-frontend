@@ -1,0 +1,10 @@
+// import this file to get access to all important variables and helpers (bootstrap + our custom ones)
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@import "./mixins/index";
+@import "./variables/index";
+@import "./variables";
+

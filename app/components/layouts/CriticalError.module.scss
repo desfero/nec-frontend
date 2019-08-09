@@ -1,0 +1,33 @@
+.section {
+  max-width: 300px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  padding: map-get($spacers, 3);
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+.header {
+  @include headline-bigger;
+
+  color: $neu-piss-yellow;
+  margin: {
+    top: map-get($spacers, 3);
+    bottom: map-get($spacers, 3);
+  }
+
+}
+
+.error-detail {
+  @include font-button-small;
+
+  color: $neu-bright-orange;
+}
+
+.paragraph {
+  @include font-default;
+
+  color: $neu-greyish-brown;
+}

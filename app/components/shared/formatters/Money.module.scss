@@ -1,0 +1,45 @@
+.money {
+  &.income,
+  &.outcome {
+    font-size: px-to-rem(14px);
+    font-weight: $font-weight-bold;
+    line-height: 1.43;
+  }
+
+  &.income {
+    color: $neu-seaweed;
+
+    &::before {
+      content: "+";
+    }
+  }
+
+  &.outcome {
+    color: $neu-red;
+
+    &::before {
+      content: "-";
+    }
+  }
+
+  .currency {
+    text-transform: none;
+  }
+
+  // Themes
+
+  &.t-green {
+    color: $neu-seaweed;
+  }
+
+  &.t-orange {
+    color: $neu-bright-orange;
+  }
+
+  &.t-big-value {
+    .value {
+      font-size: px-to-rem(26px);
+      color: $neu-seaweed;
+    }
+  }
+}

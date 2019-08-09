@@ -1,0 +1,8 @@
+@import "./variables/index";
+
+$layout-content-padding-sm: px-to-rem(15px);
+$layout-content-padding-md: px-to-rem(20px);
+$layout-content-padding-lg: px-to-rem(32px);
+
+// fonts
+$font-weight-bold: 600;

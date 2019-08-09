@@ -1,0 +1,56 @@
+@function get-linear-size($mobile-size, $desktop-size) {
+  $a: ($desktop-size - $mobile-size) / (map-get($grid-breakpoints, $resolution-range-top) - map-get($grid-breakpoints, breakpoint-next($resolution-range-bottom)));
+  $b: -$a * map-get($grid-breakpoints, breakpoint-next($resolution-range-bottom));
+
+  @return calc(#{$a} * 100vw + #{$b + $mobile-size});
+}
+
+@mixin responsive-size($field, $mobile-size, $desktop-size) {
+  #{$field}: get-linear-size($mobile-size, $desktop-size);
+
+  @include media-breakpoint-down($resolution-range-bottom) {
+    #{$field}: $mobile-size;
+  }
+
+  @include media-breakpoint-up($resolution-range-top) {
+    #{$field}: $desktop-size;
+  }
+}
+
+@mixin container-horizontal-padding {
+  @include media-breakpoint-up (md) {
+    padding-left: $authorized-layout-horizontal-padding-lg;
+    padding-right: $authorized-layout-horizontal-padding-lg;
+  }
+
+  padding-left: $authorized-layout-horizontal-padding-sm;
+  padding-right: $authorized-layout-horizontal-padding-sm;
+}
+
+@mixin get-out-of-container-layout-absolute {
+  margin-left: -$authorized-layout-horizontal-padding-sm;
+  margin-right: -$authorized-layout-horizontal-padding-sm;
+  width: calc(100% + 2 * #{$authorized-layout-horizontal-padding-sm});
+}
+
+@mixin get-out-of-container-layout {
+  @include media-breakpoint-up(md) {
+    margin-left: -$authorized-layout-horizontal-padding-lg;
+    margin-right: -$authorized-layout-horizontal-padding-lg;
+    width: calc(100% + 2 * #{$authorized-layout-horizontal-padding-lg});
+  }
+
+  margin-left: -$authorized-layout-horizontal-padding-sm;
+  margin-right: -$authorized-layout-horizontal-padding-sm;
+  width: calc(100% + 2 * #{$authorized-layout-horizontal-padding-sm});
+}
+
+@mixin section-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  max-height: 100%;
+  height: 100%;
+  width: 100%;
+}

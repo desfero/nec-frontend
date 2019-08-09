@@ -1,0 +1,29 @@
+@mixin rect ($w, $h: $w) {
+  width: $w;
+  height: $h;
+  flex-shrink: 0;
+}
+
+
+@mixin circle ($d: false) {
+  @if $d {
+    @include rect($d);
+
+    flex-shrink: 0;
+  }
+
+  border-radius: 50%;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+
+@mixin triangle-down ($w, $h, $color) {
+  @include rect(0);
+
+  border-left: $w / 2 solid transparent;
+  border-right: $w / 2 solid transparent;
+  border-top: $h solid $color;
+}

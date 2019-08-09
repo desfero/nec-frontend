@@ -1,0 +1,15 @@
+a {
+  text-decoration: underline;
+
+  &,
+  &:visited {
+    color: inherit;
+    transition: color 350ms $ease-out-expo;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    outline: none;
+  }
+}

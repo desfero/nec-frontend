@@ -1,0 +1,94 @@
+// https://codepen.io/PalmBeachagency/pen/VVRdKx
+
+$white: $neu-white-two;
+$gray: $neu-silver;
+$dark: $neu-slate-grey;
+$green: $neu-piss-yellow;
+
+$size: px-to-rem(60px);
+
+.container {
+  max-width: calc(#{$size} * 2);
+  margin: 0 auto;
+}
+
+.face {
+  position: relative;
+  width: $size;
+  height: $size;
+  background: $white;
+  border-radius: 50%;
+  border: 1px solid $dark;
+  animation: roll 3s ease-in-out infinite, move 3s ease-in-out infinite;
+}
+
+.left-eye,
+.right-eye {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: $dark;
+  border-radius: 50%;
+  top: 40%;
+  left: 30%;
+}
+
+.right-eye {
+  left: 60%;
+}
+
+.mouth {
+  border-color: $dark transparent transparent $dark;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  height: 10px;
+  left: 41%;
+  position: absolute;
+  top: 63%;
+  width: 10px;
+}
+
+.sad {
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+.shadow {
+  position: relative;
+  width: $size;
+  height: px-to-rem(8px);
+  opacity: .5;
+  background: $green;
+  border-radius: 50%;
+
+  animation: move 3s ease-in-out infinite;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(168deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes move {
+  0% {
+    left: 0;
+  }
+
+  50% {
+    left: calc(100% - #{$size});
+  }
+
+  100% {
+    left: 0;
+  }
+}

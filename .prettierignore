@@ -1,0 +1,12 @@
+node_modules
+dist
+.vscode
+package.json
+.nyc_output
+coverage
+.awcache
+intl
+e2e
+.reg
+git_modules
+app/lib/contracts
