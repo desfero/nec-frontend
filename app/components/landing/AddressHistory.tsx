@@ -48,9 +48,13 @@ const AddressHistoryLayout: React.FunctionComponent<
             outputFormat={ENumberOutputFormat.ONLY_NONZERO_DECIMALS}
           />
         </p>
-        <div className={styles.historyChart}>
-          <HistoryChart necHistory={necHistory} />
-        </div>
+        {necHistory.history.length > 0 ? (
+          <div className={styles.historyChart}>
+            <HistoryChart necHistory={necHistory} />
+          </div>
+        ) : (
+          <p>No transactions recorded from last 30 days</p>
+        )}
       </section>
     );
   }

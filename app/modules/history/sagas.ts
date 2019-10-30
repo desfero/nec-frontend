@@ -1,3 +1,4 @@
+import moment from "moment";
 import { all, Effect, fork, put } from "redux-saga/effects";
 
 import { TGlobalDependencies } from "../../di/setupBindings";
@@ -12,8 +13,13 @@ function* loadHistory(
   try {
     const checksumAddress = toChecksumAddress(action.payload.address);
 
+    // Get only last full 30 days
+    const last30Days = moment()
+      .subtract(30, "days")
+      .startOf("day");
+
     const { history, currentBalance } = yield all({
-      history: web3Manager.getNECHistory(checksumAddress),
+      history: web3Manager.getNECHistory(checksumAddress, last30Days),
       currentBalance: web3Manager.getNECCurrentBalance(checksumAddress),
     });
 

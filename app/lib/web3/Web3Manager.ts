@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import { decorate, inject, injectable } from "inversify";
+import moment, { Moment } from "moment";
 import Web3 from "web3";
 
 import { symbols } from "../../di/symbols";
@@ -7,6 +8,9 @@ import { EthereumAddressWithChecksum } from "../../types";
 import { ILogger } from "../dependencies/logger/index";
 import { address as necAddress, api as necABI } from "./nectarTokenContract";
 import { ETransferDirection, IEthereumNetworkConfig, THistory } from "./types";
+
+// Highest recorded value of blocks per day
+const BLOCKS_MINED_PER_DAY = 6912;
 
 try {
   // this throws if applied multiple times, which happens in tests
@@ -32,6 +36,12 @@ export class Web3Manager extends EventEmitter {
     this.web3 = new Web3(new Web3.providers.HttpProvider(this.ethereumNetworkConfig.rpcUrl));
   }
 
+  public async getBlock(blockNumber: number): Promise<any> {
+    // TODO: Add caching as we can call `getBlock` more than once with the same block number
+    //       in case a couple of transaction were mined in the same block
+    return this.web3!.eth.getBlock(blockNumber);
+  }
+
   public async getBlockTimestamp(blockNumber: number): Promise<any> {
     const block = await this.web3!.eth.getBlock(blockNumber);
 
@@ -45,18 +55,40 @@ export class Web3Manager extends EventEmitter {
     return await contract.methods.balanceOf(address).call();
   }
 
-  public async getNECHistory(address: EthereumAddressWithChecksum): Promise<THistory[]> {
+  public async getNECHistory(
+    address: EthereumAddressWithChecksum,
+    fromMoment: Moment,
+  ): Promise<THistory[]> {
     const contract = new this.web3!.eth.Contract(necABI, necAddress);
+
+    const currentBlockNumber = await this.web3!.eth.getBlockNumber();
+
+    const fromLastDays = moment().diff(fromMoment, "days");
+
+    // Not an ideal solution as we either download a couple of blocks more or
+    // if `BLOCKS_MINED_PER_DAY` is not up to date we can miss a couple of blocks
+    const fromBlockNumber = currentBlockNumber - BLOCKS_MINED_PER_DAY * fromLastDays;
+
+    const fromBlock = await this.web3!.eth.getBlock(fromBlockNumber);
+
+    if (fromMoment.isBefore(+fromBlock.timestamp * 1000)) {
+      this.logger.warn(
+        "Calculated block number is after expected moment. BLOCKS_MINED_PER_DAY constant needs adjustment",
+        new Error("Invalid block number calculated"),
+      );
+
+      // TODO: Repeat loop `fromBlockNumber - BLOCKS_MINED_PER_DAY` until we get expected block number
+    }
 
     const [incomingTransfers, outcomingTransfers] = await Promise.all([
       contract.getPastEvents("Transfer", {
         filter: { _to: [address] },
-        fromBlock: 8700473,
+        fromBlock: fromBlockNumber,
         toBlock: "latest",
       }),
       contract.getPastEvents("Transfer", {
         filter: { _from: [address] },
-        fromBlock: 8700473,
+        fromBlock: fromBlockNumber,
         toBlock: "latest",
       }),
     ]);
@@ -74,15 +106,17 @@ export class Web3Manager extends EventEmitter {
       }),
     );
 
-    return transfersWithTimestamp.map(t => ({
-      direction:
-        t.returnValues["_to"] === address
-          ? ETransferDirection.INCOMING
-          : ETransferDirection.OUTCOMING,
-      amount: t.returnValues["_amount"],
-      to: t.returnValues["_to"],
-      from: t.returnValues["_from"],
-      at: t.timestamp,
-    }));
+    return transfersWithTimestamp
+      .filter(transfer => fromMoment.isBefore(transfer.timestamp))
+      .map(t => ({
+        direction:
+          t.returnValues["_to"] === address
+            ? ETransferDirection.INCOMING
+            : ETransferDirection.OUTCOMING,
+        amount: t.returnValues["_amount"],
+        to: t.returnValues["_to"],
+        from: t.returnValues["_from"],
+        at: t.timestamp,
+      }));
   }
 }
