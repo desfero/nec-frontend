@@ -4,7 +4,7 @@ import { all, Effect, fork, put } from "redux-saga/effects";
 import { TGlobalDependencies } from "../../di/setupBindings";
 import { toChecksumAddress } from "../../utils/toChecksumAddress";
 import { actions, TActionFromCreator } from "../actions";
-import { neuTakeEvery } from "../sagasUtils";
+import { neuTakeLatest } from "../sagasUtils";
 
 function* loadHistory(
   { web3Manager, logger, notificationCenter }: TGlobalDependencies,
@@ -31,5 +31,5 @@ function* loadHistory(
 }
 
 export function* historySagas(): Iterator<Effect> {
-  yield fork(neuTakeEvery, actions.history.loadHistory, loadHistory);
+  yield fork(neuTakeLatest, actions.history.loadHistory, loadHistory);
 }

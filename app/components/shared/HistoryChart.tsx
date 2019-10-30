@@ -14,18 +14,22 @@ type TExternalProps = {
 };
 
 const HistoryChart: React.FunctionComponent<TExternalProps> = ({ necHistory }) => {
-  const normalizedHistory = normalizeBalanceHistory(necHistory.history);
+  const chartData = React.useMemo(
+    () =>
+      normalizeBalanceHistory(necHistory.history)
+        .reduceRight<[string, BigNumber][]>((p, [timestamp, difference]) => {
+          if (p.length === 0) {
+            return [[timestamp, difference.plus(necHistory.currentBalance)]];
+          }
 
-  const reducedHistory = normalizedHistory.reduceRight<[string, BigNumber][]>(
-    (p, [timestamp, difference]) => {
-      if (p.length === 0) {
-        return [[timestamp, difference.plus(necHistory.currentBalance)]];
-      }
-
-      const [, firstDifference] = p[0];
-      return [[timestamp, difference.plus(firstDifference)], ...p];
-    },
-    [],
+          const [, firstDifference] = p[0];
+          return [[timestamp, difference.plus(firstDifference)], ...p];
+        }, [])
+        .map(([date, amount]) => ({
+          y: amount.toString(),
+          x: date,
+        })),
+    [necHistory.history, necHistory.currentBalance],
   );
 
   return (
@@ -33,10 +37,7 @@ const HistoryChart: React.FunctionComponent<TExternalProps> = ({ necHistory }) =
       data={[
         {
           id: "NEC",
-          data: reducedHistory.map(([date, amount]) => ({
-            y: amount.toString(),
-            x: date,
-          })),
+          data: chartData,
         },
       ]}
       margin={{ top: 20, right: 20, bottom: 60, left: 80 }}
