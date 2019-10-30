@@ -3,7 +3,7 @@ import { decorate, inject, injectable } from "inversify";
 import Web3 from "web3";
 
 import { symbols } from "../../di/symbols";
-import { EthereumAddress } from "../../types";
+import { EthereumAddressWithChecksum } from "../../types";
 import { ILogger } from "../dependencies/logger/index";
 import { address as necAddress, api as necABI } from "./nectarTokenContract";
 import { ETransferDirection, IEthereumNetworkConfig, THistory } from "./types";
@@ -39,13 +39,13 @@ export class Web3Manager extends EventEmitter {
     return +block.timestamp * 1000;
   }
 
-  public async getNECCurrentBalance(address: EthereumAddress): Promise<string> {
+  public async getNECCurrentBalance(address: EthereumAddressWithChecksum): Promise<string> {
     const contract = new this.web3!.eth.Contract(necABI, necAddress);
 
     return await contract.methods.balanceOf(address).call();
   }
 
-  public async getNECHistory(address: EthereumAddress): Promise<THistory[]> {
+  public async getNECHistory(address: EthereumAddressWithChecksum): Promise<THistory[]> {
     const contract = new this.web3!.eth.Contract(necABI, necAddress);
 
     const [incomingTransfers, outcomingTransfers] = await Promise.all([

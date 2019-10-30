@@ -1,5 +1,5 @@
 import { THistory } from "../../lib/web3/types";
-import { EthereumAddress } from "../../types";
+import { EthereumAddress, EthereumAddressWithChecksum } from "../../types";
 import { createActionFactory } from "../actionsUtils";
 
 export const historyActions = {
@@ -8,6 +8,6 @@ export const historyActions = {
   })),
   setHistory: createActionFactory(
     "HISTORY_SET_HISTORY",
-    (address: EthereumAddress, currentBalance: string, history: THistory[]) => ({ address, currentBalance, history }),
+    (address: EthereumAddressWithChecksum, currentBalance: string, history: THistory[]) => ({ address, currentBalance, history }),
   ),
 };
