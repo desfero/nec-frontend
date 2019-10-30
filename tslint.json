@@ -29,10 +29,7 @@
     "no-regex-spaces": true,
     "no-unexpected-multiline": true,
     "valid-typeof": true,
-    "import-blacklist": [
-      true,
-      { "react-intl": ["FormattedMessage", "FormattedHTMLMessage"], "formik": ["Form"] }
-    ],
+    "import-blacklist": [true, { "react-intl": ["FormattedMessage", "FormattedHTMLMessage"] }],
     "triple-equals": true,
     "no-eval": true,
     "no-switch-case-fall-through": true,

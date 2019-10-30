@@ -39,7 +39,6 @@ const HistoryChart: React.FunctionComponent<TExternalProps> = ({ necHistory }) =
       ]}
       margin={{ top: 20, right: 20, bottom: 60, left: 80 }}
       enableSlices={"x"}
-      height={400}
       curve="monotoneX"
       useMesh={false}
     />

@@ -9,7 +9,7 @@ import { e2eRoutes } from "./testing/e2eRoutes";
 
 export const AppRouter: React.FunctionComponent = () => (
   <SwitchConnected>
-    <Route path={appRoutes.root} component={Landing} exact />
+    <Route path={appRoutes.root} component={Landing} />
 
     {/*Routes used only in E2E tests*/}
     {!!process.env.IS_CYPRESS && [

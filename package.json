@@ -142,7 +142,7 @@
     "connected-react-router": "6.2.2",
     "copy-text-to-clipboard": "^2.1.0",
     "crypto-random-string": "^3.0.1",
-    "formik": "1.2.0",
+    "formik": "^1.5.8",
     "history": "^4.7.2",
     "inversify": "^4.10.0",
     "lodash": "^4.17.11",
