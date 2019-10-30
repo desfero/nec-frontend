@@ -1,28 +1,32 @@
 import { ResponsiveLine } from "@nivo/line";
+import BigNumber from "bignumber.js";
 import moment from "moment";
 import * as React from "react";
 
-import { selectHistory } from "../../modules/history/selectors";
+import { TTokenHistory } from "../../modules/history/reducer";
+import { DeepReadonlyObject } from "../../types";
 import { InvariantError } from "../../utils/invariant";
 import { normalizeBalanceHistory } from "../../utils/normalizeHistory";
 import { ENumberInputFormat, ENumberOutputFormat, formatNumber } from "./formatters/utils";
 
 type TExternalProps = {
-  necHistory: ReturnType<typeof selectHistory>;
+  necHistory: DeepReadonlyObject<TTokenHistory>;
 };
 
 const HistoryChart: React.FunctionComponent<TExternalProps> = ({ necHistory }) => {
   const normalizedHistory = normalizeBalanceHistory(necHistory.history);
 
-  const reducedHistory = normalizedHistory.reduceRight((p, [timestamp, difference]) => {
-    if (p.length === 0) {
-      return [[timestamp, difference.plus(necHistory.currentBalance)]];
-    }
+  const reducedHistory = normalizedHistory.reduceRight<[string, BigNumber][]>(
+    (p, [timestamp, difference]) => {
+      if (p.length === 0) {
+        return [[timestamp, difference.plus(necHistory.currentBalance)]];
+      }
 
-    const first = p[0];
-
-    return [[timestamp, difference.plus(first[1])], ...p];
-  }, []);
+      const [, firstDifference] = p[0];
+      return [[timestamp, difference.plus(firstDifference)], ...p];
+    },
+    [],
+  );
 
   return (
     <ResponsiveLine

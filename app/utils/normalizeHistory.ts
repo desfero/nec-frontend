@@ -1,14 +1,13 @@
 import BigNumber from "bignumber.js";
 import { compose, entries, groupBy, mapValues, sortBy } from "lodash/fp";
+import moment from "moment";
 
 import { ETransferDirection, THistory } from "../lib/web3/types";
 
-type TNormalized = [number, BigNumber];
-
-const normalizeBalanceHistory: (history: THistory[]) => TNormalized[] = compose(
-  sortBy(([timestamp]) => timestamp),
+const normalizeBalanceHistory = compose(
+  sortBy<[string, BigNumber]>(([timestamp]) => timestamp),
   entries,
-  mapValues(transactions =>
+  mapValues<THistory[], BigNumber>(transactions =>
     transactions.reduce((b, t) => {
       if (t.direction === ETransferDirection.OUTCOMING) {
         return b.minus(t.amount);
@@ -17,13 +16,12 @@ const normalizeBalanceHistory: (history: THistory[]) => TNormalized[] = compose(
       }
     }, new BigNumber(0)),
   ),
-  groupBy(transaction => {
-    const date = new Date(transaction.at);
-
-    date.setHours(0, 0, 0, 0);
-
-    return date.valueOf();
-  }),
+  groupBy<THistory>(transaction =>
+    moment(transaction.at)
+      .startOf("day")
+      .valueOf()
+      .toString(),
+  ),
 );
 
 export { normalizeBalanceHistory };

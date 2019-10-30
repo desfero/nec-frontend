@@ -43,7 +43,7 @@ export class Web3Manager extends EventEmitter {
   }
 
   public async getBlockTimestamp(blockNumber: number): Promise<any> {
-    const block = await this.web3!.eth.getBlock(blockNumber);
+    const block = await this.getBlock(blockNumber);
 
     // convert from ethereum timestamp format
     return +block.timestamp * 1000;
@@ -69,7 +69,7 @@ export class Web3Manager extends EventEmitter {
     // if `BLOCKS_MINED_PER_DAY` is not up to date we can miss a couple of blocks
     const fromBlockNumber = currentBlockNumber - BLOCKS_MINED_PER_DAY * fromLastDays;
 
-    const fromBlock = await this.web3!.eth.getBlock(fromBlockNumber);
+    const fromBlock = await this.getBlock(fromBlockNumber);
 
     if (fromMoment.isBefore(+fromBlock.timestamp * 1000)) {
       this.logger.warn(

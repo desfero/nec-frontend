@@ -3,7 +3,7 @@ import { AppReducer } from "../../store";
 import { DeepReadonly } from "../../types";
 import { actions } from "../actions";
 
-type TTokenHistory = {
+export type TTokenHistory = {
   currentBalance: string;
   history: THistory[];
 };
